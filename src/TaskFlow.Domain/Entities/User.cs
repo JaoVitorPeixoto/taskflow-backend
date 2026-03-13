@@ -31,11 +31,11 @@ public class User : EntityBase
 
     public void UpdateName(string name)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+       ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
         this.Name = name;
 
-        this.UpdateAudit();s
+        this.UpdateAudit();
     }
 
     public void UpdatePassword(string password)
