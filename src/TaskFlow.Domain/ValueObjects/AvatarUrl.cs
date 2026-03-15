@@ -12,11 +12,19 @@ public record AvatarUrl
 
     public AvatarUrl(string url)
     {
-          if (string.IsNullOrWhiteSpace(url))
+        if (string.IsNullOrWhiteSpace(url))
             throw new DataIsInvalidException("URL_IS_EMPTY", "Avatar URL cannot be empty.");
 
-        var normalizedUrl = new Uri(url.Trim());
+        try
+        {
+            var normalizedUrl = new Uri(url.Trim());
 
-        Url = normalizedUrl.AbsolutePath;
+            Url = normalizedUrl.AbsolutePath;
+        }
+        catch
+        {
+            throw new DataIsInvalidException("URL_INCORRECT_FORMAT", "Avatar URL is in incorrect format.");
+        }   
+        
     }
 }
