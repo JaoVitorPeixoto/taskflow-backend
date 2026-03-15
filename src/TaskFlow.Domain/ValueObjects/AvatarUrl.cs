@@ -19,7 +19,7 @@ public record AvatarUrl
         {
             var normalizedUrl = new Uri(url.Trim());
 
-            Url = normalizedUrl.AbsolutePath;
+            Url = normalizedUrl.AbsoluteUri;
         }
         catch
         {
