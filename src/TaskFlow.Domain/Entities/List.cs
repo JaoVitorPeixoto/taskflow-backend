@@ -1,4 +1,5 @@
 using System;
+using TaskFlow.Domain.Exceptions;
 
 namespace TaskFlow.Domain.Entities;
 
@@ -17,8 +18,9 @@ public class List : EntityBase
         string? description = null
     ) : base()
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(title, nameof(title));
-        
+        if (string.IsNullOrWhiteSpace(title))
+            throw new DataIsInvalidException("TITLE_IS_EMPTY", "Title cannot be empty.");
+
         this.UserId = userId;
         this.Title = title;
         this.Description = description;
@@ -26,11 +28,12 @@ public class List : EntityBase
 
     public void UpdateDetails(string title, string? description = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(title, nameof(description));
-    
+        if (string.IsNullOrWhiteSpace(title))
+            throw new DataIsInvalidException("TITLE_IS_EMPTY", "Title cannot be empty.");
+
         this.Title = title;
         this.Description = description;
-        
+
         this.UpdateAudit();
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using TaskFlow.Domain.Exceptions;
 using TaskFlow.Domain.ValueObjects;
 
 namespace TaskFlow.Domain.Entities;
@@ -20,8 +21,10 @@ public class User : EntityBase
         AvatarUrl avartarUrl
     ) : base()
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
-        ArgumentException.ThrowIfNullOrWhiteSpace(password, nameof(password));
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DataIsInvalidException("NAME_IS_EMPTY", "Name cannot be empty.");
+        if (string.IsNullOrWhiteSpace(password))
+            throw new DataIsInvalidException("PASSWORD_IS_EMPTY", "Password cannot be empty.");
 
         this.Name = name;
         this.Password = password;
@@ -31,7 +34,8 @@ public class User : EntityBase
 
     public void UpdateName(string name)
     {
-       ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DataIsInvalidException("NAME_IS_EMPTY", "Name cannot be empty.");
 
         this.Name = name;
 
@@ -40,7 +44,8 @@ public class User : EntityBase
 
     public void UpdatePassword(string password)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(password, nameof(password));
+        if (string.IsNullOrWhiteSpace(password))
+            throw new DataIsInvalidException("PASSWORD_IS_EMPTY", "Password cannot be empty.");
 
         this.Password = password;
 
