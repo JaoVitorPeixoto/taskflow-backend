@@ -1,4 +1,3 @@
-using System;
 using TaskFlow.Domain.Enums;
 using TaskFlow.Domain.Exceptions;
 using TaskFlow.Domain.ValueObjects;
@@ -15,6 +14,7 @@ public class Task : EntityBase
     public DateTime? CompletedAt { get; private set; }
     public TaskPriority Priority { get; private set; }
     public Scheduling? Scheduling { get; private set; }
+    public bool Notify { get; private set; }
 
     // Ef Core
     private Task() {}
@@ -25,12 +25,16 @@ public class Task : EntityBase
         string? description = null,
         Guid? listId = null,
         TaskPriority priority = TaskPriority.P4,
-        Scheduling? scheduling = null
+        Scheduling? scheduling = null,
+        bool notify = false
     ) : base()
     {
         
         if (string.IsNullOrWhiteSpace(title))
             throw new DataIsInvalidException("TITLE_IS_EMPTY", "Title cannot be empty.");
+        
+        if (notify == true && (scheduling == null || scheduling.Time == null))
+            throw new DataIsInvalidException("NOTIFY_WITH_SCHEDULING_TIME_IS_NULL", "In order to issue a notification, the scheduling and time cannot be null.");
 
         this.ListId = listId;
         this.UserId = userId;
@@ -40,6 +44,7 @@ public class Task : EntityBase
         this.CompletedAt = null;
         this.Priority = priority;
         this.Scheduling = scheduling;
+        this.Notify = notify;
     }
 
     private void CanEditTask()
@@ -67,6 +72,33 @@ public class Task : EntityBase
 
         this.Scheduling = scheduling;
         
+        if (scheduling.Time == null)
+            this.Notify = false;
+        
+        this.UpdateAudit();
+    }
+
+    public void ShouldNotify()
+    {
+        CanEditTask();
+
+        if (Notify)
+            return;
+        
+        Notify = true;
+
+        this.UpdateAudit();
+    }
+
+    public void RemoveNotify()
+    {
+        CanEditTask();
+
+        if (!Notify)
+            return;
+        
+        Notify = false;
+
         this.UpdateAudit();
     }
 
@@ -75,6 +107,7 @@ public class Task : EntityBase
         CanEditTask();
         
         this.Scheduling = null;
+        this.Notify = false;
 
         this.UpdateAudit();
     }
@@ -137,9 +170,9 @@ public class Task : EntityBase
             Scheduling.Factory.Recurring(
                 nextDate.Value,
                 Scheduling.Time,
-                Scheduling.Recurrence,
-                Scheduling.Notify
-            )
+                Scheduling.Recurrence
+            ),
+            Notify
         );
 
         this.UpdateAudit();
