@@ -1,5 +1,6 @@
 using System;
 using System.Net.Mail;
+using TaskFlow.Domain.Exceptions;
 
 namespace TaskFlow.Domain.ValueObjects;
 
@@ -13,12 +14,12 @@ public record Email
     public Email(string address)
     {
         if (string.IsNullOrWhiteSpace(address))
-            throw new ArgumentException("Email address cannot be empty.", nameof(address));
+            throw new DataIsInvalidException("EMAIL_IS_EMPTY", "Email address cannot be empty.");
 
         var normalized = address.Trim().ToLowerInvariant(); // normaliza primeiro
 
         if (!IsValidEmail(normalized))
-            throw new ArgumentException("Invalid email address format.", nameof(address));
+            throw new DataIsInvalidException("EMAIL_INCORRET_FORMAT", "Invalid email address format.");
 
         Address = normalized;
     }

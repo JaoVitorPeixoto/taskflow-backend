@@ -1,4 +1,5 @@
 using System;
+using TaskFlow.Domain.Exceptions;
 
 namespace TaskFlow.Domain.ValueObjects;
 
@@ -11,7 +12,8 @@ public record AvatarUrl
 
     public AvatarUrl(string url)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(url, nameof(url));
+          if (string.IsNullOrWhiteSpace(url))
+            throw new DataIsInvalidException("URL_IS_EMPTY", "Avatar URL cannot be empty.");
 
         var normalizedUrl = new Uri(url.Trim());
 
