@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using Bogus;
 using FluentAssertions;
 using TaskFlow.Domain.Exceptions;
@@ -45,6 +46,24 @@ public class EmailTests
         // Assert
         funcEmail.Should().Throw<DataIsInvalidException>();
     } 
+
+
+    [Fact]
+    [Trait("Modulo", "Domain")]
+    [Trait("ValueObject", "Email")]
+    public void GivenEmail_ShouldeBeCorrectFormat()
+    {
+        // Arrange
+        var email = new Email(_faker.Internet.Email());
+ 
+        // Act
+        var funcMail = () => new MailAddress(email.Address);
+
+        // Assert
+        funcMail.Should().NotThrow();
+        email.Address.Should().Be(funcMail().Address);
+    }
+
 
     [Fact]
     [Trait("Modulo", "Domain")]

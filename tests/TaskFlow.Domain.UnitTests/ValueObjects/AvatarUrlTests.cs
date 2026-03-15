@@ -47,6 +47,23 @@ public class AvatarUrlTests
     [Fact]
     [Trait("Modulo", "Domain")]
     [Trait("ValueObject", "AvatarUrl")]
+    public void GivenAvatarUrl_ShouldeBeCorrectFormat()
+    {
+        // Arrange
+        var avatarUrl = new AvatarUrl(_faker.Internet.Avatar());
+ 
+        // Act
+        var funcUri = () => new Uri(avatarUrl.Url);
+
+        // Assert
+        funcUri.Should().NotThrow();
+        avatarUrl.Url.Should().Be(funcUri().AbsoluteUri);
+    }
+
+
+    [Fact]
+    [Trait("Modulo", "Domain")]
+    [Trait("ValueObject", "AvatarUrl")]
     public void Compare_GivenTwoEqualsAvatarUrls_ShouldBeSameValues()
     {
         // Arrange
