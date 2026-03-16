@@ -9,7 +9,11 @@ public class User : EntityBase
     public string Name { get; private set;}
     public Email Email { get; private set; }
     public string Password { get; private set; }
-    public AvatarUrl AvartarUrl { get; private set; }
+    public AvatarUrl AvatarUrl { get; private set; }
+
+    // Navegações
+    public IReadOnlyCollection<List> Lists { get; private set; } = [];
+    public IReadOnlyCollection<Task> Tasks { get; private set; } = [];
 
     // EF Core
     private User() { }
@@ -29,7 +33,7 @@ public class User : EntityBase
         this.Name = name;
         this.Password = password;
         this.Email = email;
-        this.AvartarUrl = avartarUrl;
+        this.AvatarUrl = avartarUrl;
     }
 
     public void UpdateName(string name)
@@ -61,7 +65,7 @@ public class User : EntityBase
 
     public void UpdateAvatarUrl(AvatarUrl avatarUrl)
     {
-        this.AvartarUrl = avatarUrl;
+        this.AvatarUrl = avatarUrl;
 
         this.UpdateAudit();
     }

@@ -16,6 +16,11 @@ public class Task : EntityBase
     public Scheduling? Scheduling { get; private set; }
     public bool Notify { get; private set; }
 
+
+    // Navegações
+    public User User { get; private set; }
+    public List? List { get; private set; }
+
     // Ef Core
     private Task() {}
 

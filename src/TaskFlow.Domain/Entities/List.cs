@@ -9,6 +9,11 @@ public class List : EntityBase
     public string Title { get; private set; }
     public string? Description { get; private set; }
 
+
+    // Navegações
+    public User User { get; private set; }
+    public IReadOnlyCollection<Task> Tasks { get; private set; } = [];
+
     // EF Core
     private List(){}
 
