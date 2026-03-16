@@ -10,6 +10,8 @@ public class ListConfiguration : EntityBaseConfiguration<List>
 
     protected override void ConfigureEntity(EntityTypeBuilder<List> builder)
     {
+        builder.ToTable("Lista");
+
         builder.Property(x => x.Title)
             .HasColumnName("Titulo")
             .HasMaxLength(100)
