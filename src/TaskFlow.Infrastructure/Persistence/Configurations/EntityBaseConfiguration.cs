@@ -13,7 +13,7 @@ public abstract class EntityBaseConfiguration<T> : IEntityTypeConfiguration<T> w
         ConfigureEntity(builder);
     }
 
-    private void ConfigureBase(EntityTypeBuilder<T> builder)
+    private static void ConfigureBase(EntityTypeBuilder<T> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
