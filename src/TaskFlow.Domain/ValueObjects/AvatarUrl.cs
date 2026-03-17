@@ -10,6 +10,9 @@ public record AvatarUrl
     public override string ToString() => Url;
     public static implicit operator string(AvatarUrl avatarUrl) => avatarUrl.ToString();
 
+      // EF Core
+    private AvatarUrl() {}
+
     public AvatarUrl(string url)
     {
         if (string.IsNullOrWhiteSpace(url))

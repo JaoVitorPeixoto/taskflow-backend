@@ -11,6 +11,9 @@ public record Email
     public override string ToString() => Address;
     public static implicit operator string(Email email) => email.Address.ToString();
 
+    // EF Core
+    private Email() {}
+
     public Email(string address)
     {
         if (string.IsNullOrWhiteSpace(address))

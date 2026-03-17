@@ -11,6 +11,9 @@ public record Scheduling
     public RecurrenceSchedule Recurrence { get; private set; }
     public bool IsRecurring => Recurrence != RecurrenceSchedule.None;
 
+      // EF Core
+    private Scheduling() {}
+
     private Scheduling(
         DateOnly date, 
         TimeOnly? time, 
