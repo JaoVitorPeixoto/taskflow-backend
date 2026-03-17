@@ -28,7 +28,7 @@ public class UserTests
         Assert.Equal(name, user.Name);
         Assert.Equal(email, user.Email);
         Assert.Equal(password, user.Password);
-        Assert.Equal(avatarUrl, user.AvartarUrl);
+        Assert.Equal(avatarUrl, user.AvatarUrl);
     }
 
     [Fact]
@@ -149,7 +149,7 @@ public class UserTests
         user.UpdateAvatarUrl(newAvatarUrl);
 
         // Assert
-        Assert.Equal(newAvatarUrl, user.AvartarUrl);
+        Assert.Equal(newAvatarUrl, user.AvatarUrl);
     }
 
     [Fact]
