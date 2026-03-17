@@ -9,8 +9,6 @@ public class TaskConfiguration : EntityBaseConfiguration<Domain.Entities.Task>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<Domain.Entities.Task> builder)
     {
-        builder.ToTable("Tarefa");
-
         builder.Property(x => x.ListId)
             .HasColumnName("IdLista")
             .IsRequired(false);

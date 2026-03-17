@@ -8,8 +8,6 @@ public class UserConfiguration : EntityBaseConfiguration<User>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("Usuario");
-
         builder.Property(x => x.Name)
             .HasColumnName("Nome")
             .HasMaxLength(250)
