@@ -18,8 +18,8 @@ public class Task : EntityBase
 
 
     // Navegações
-    public User User { get; private set; }
-    public List? List { get; private set; }
+    public User User { get; }
+    public List? List { get; }
 
     // Ef Core
     private Task() {}
@@ -38,7 +38,7 @@ public class Task : EntityBase
         if (string.IsNullOrWhiteSpace(title))
             throw new DataIsInvalidException("TITLE_IS_EMPTY", "Title cannot be empty.");
         
-        if (notify == true && (scheduling == null || scheduling.Time == null))
+        if (notify && (scheduling == null || scheduling.Time == null))
             throw new DataIsInvalidException("NOTIFY_WITH_SCHEDULING_TIME_IS_NULL", "In order to issue a notification, the scheduling and time cannot be null.");
 
         this.ListId = listId;

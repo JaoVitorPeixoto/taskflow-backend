@@ -11,7 +11,7 @@ public class List : EntityBase
 
 
     // Navegações
-    public User User { get; private set; }
+    public User User { get; }
     public IReadOnlyCollection<Task> Tasks { get; private set; } = [];
 
     // EF Core
