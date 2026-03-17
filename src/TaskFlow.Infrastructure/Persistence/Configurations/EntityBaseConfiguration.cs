@@ -20,9 +20,11 @@ public abstract class EntityBaseConfiguration<T> : IEntityTypeConfiguration<T> w
             .ValueGeneratedNever();
 
         builder.Property(x => x.CreatedAt)
+            .HasColumnName("DataCriado")
             .IsRequired();
 
         builder.Property(x => x.UpdatedAt)
+            .HasColumnName("DataAlterado")
             .IsRequired(false); 
 
     }
