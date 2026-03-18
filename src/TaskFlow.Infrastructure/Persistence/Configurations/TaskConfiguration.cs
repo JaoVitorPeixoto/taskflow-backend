@@ -30,6 +30,16 @@ public class TaskConfiguration : EntityBaseConfiguration<Domain.Entities.Task>
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
+
+        builder.Property(x => x.ParentTaskId)
+            .HasColumnName("IdTaskPai")
+            .IsRequired(false);
+
+        builder.HasOne(x => x.ParentTask)
+            .WithMany(t => t.SubTasks)
+            .HasForeignKey(t => t.ParentTaskId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         
         builder.Property(x => x.Title)
             .HasColumnName("Titulo")

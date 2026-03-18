@@ -8,6 +8,7 @@ public class Task : EntityBase
 {
     public Guid? ListId { get; private set; }
     public Guid UserId { get; private init; }
+    public Guid? ParentTaskId { get; private set; }
     public string Title { get; private set; }
     public string? Description { get; private set; }
     public bool IsCompleted { get; private set; }
@@ -20,6 +21,8 @@ public class Task : EntityBase
     // Navegações
     public User User { get; }
     public List? List { get; }
+    public Task? ParentTask { get; }
+    public IReadOnlyCollection<Task> SubTasks { get; private set; } = [];
 
     // Ef Core
     private Task() {}
@@ -43,6 +46,7 @@ public class Task : EntityBase
 
         this.ListId = listId;
         this.UserId = userId;
+        this.ParentTaskId = null;
         this.Title = title;
         this.Description = description;
         this.IsCompleted = false;
@@ -56,6 +60,33 @@ public class Task : EntityBase
     {
          if (this.IsCompleted)
             throw new TaskIsCompletedException();
+    }
+
+    public void SetParentTask(Guid parentTaskId)
+    {
+        CanEditTask();
+
+        if (ParentTaskId == parentTaskId)
+            return;
+
+        if (parentTaskId == Id)
+            throw new TaskIsOwnParentException();
+
+        ParentTaskId = parentTaskId;
+
+        this.UpdateAudit();
+        
+    }
+
+    public void RemoveParentTask()
+    {
+        CanEditTask();
+
+        if (ParentTaskId is null)
+            return;
+
+        ParentTaskId = null;
+        UpdateAudit();
     }
 
     public void UpdateDetails(string title, string? description = null)
