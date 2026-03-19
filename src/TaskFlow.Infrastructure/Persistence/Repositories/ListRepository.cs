@@ -28,7 +28,7 @@ public class ListRepository : IListRepository
         return Task.CompletedTask;
     }
 
-    public async Task<IEnumerable<List>> GetAllAsync(Expression<Func<List, bool>>? filter, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<List>> GetAllAsync(Expression<Func<List, bool>>? filter = null, CancellationToken cancellationToken = default)
     {
         var query = filter != null ? _context.Lists.Where(filter) : _context.Lists;
         return await query.ToListAsync(cancellationToken);

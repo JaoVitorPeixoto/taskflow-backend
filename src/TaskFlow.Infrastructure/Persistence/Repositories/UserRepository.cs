@@ -36,7 +36,7 @@ public class UserRepository : IUserRepository
         return await _context.Users.AnyAsync(u => u.Email == email, cancellationToken);
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>>? filter, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>>? filter = null, CancellationToken cancellationToken = default)
     {
         var query = filter != null ? _context.Users.Where(filter) : _context.Users;
         return await query.ToListAsync(cancellationToken);

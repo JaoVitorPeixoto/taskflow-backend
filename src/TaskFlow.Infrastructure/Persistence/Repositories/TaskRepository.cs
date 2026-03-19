@@ -30,7 +30,7 @@ public class TaskRepository : ITaskRepository
         return Task.CompletedTask;
     }
 
-    public async Task<IEnumerable<TaskEntity>> GetAllAsync(Expression<Func<TaskEntity, bool>>? filter, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TaskEntity>> GetAllAsync(Expression<Func<TaskEntity, bool>>? filter = null, CancellationToken cancellationToken = default)
     {
         var query = filter != null ? _context.Tasks.Where(filter) : _context.Tasks;
         return await query.ToListAsync(cancellationToken);
