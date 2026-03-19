@@ -4,7 +4,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace TaskFlow.Infrastructure.Persistence.Repositories;
 
-public class UniOfWork : IUnitOfWork, IAsyncDisposable
+public class UnitOfWork : IUnitOfWork, IAsyncDisposable
 {
     private readonly AppDbContext _context;
     private IDbContextTransaction? _transaction;
@@ -20,7 +20,7 @@ public class UniOfWork : IUnitOfWork, IAsyncDisposable
     public ITaskRepository TaskRepository => _taskRepository ??= new TaskRepository(_context);
 
 
-    public UniOfWork(AppDbContext context)
+    public UnitOfWork(AppDbContext context)
     {
         _context = context;
     }
