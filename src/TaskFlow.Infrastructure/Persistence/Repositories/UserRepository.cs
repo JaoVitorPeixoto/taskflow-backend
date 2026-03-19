@@ -33,7 +33,7 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> EmailExistsAsync(Email email, CancellationToken cancellationToken = default)
     {
-        return await _context.Users.AnyAsync(u => u.Email == email, cancellationToken);
+        return await _context.Users.AnyAsync(u => u.Email.Address == email.Address, cancellationToken);
     }
 
     public async Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>>? filter = null, CancellationToken cancellationToken = default)
@@ -44,7 +44,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        return await _context.Users.FirstOrDefaultAsync(u => u.Email.Address == email.Address, cancellationToken);
     }
 
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
