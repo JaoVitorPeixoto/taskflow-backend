@@ -204,7 +204,7 @@ namespace TaskFlow.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("TaskId");
 
-                            b1.ToTable("Tarefa");
+                            b1.ToTable("Tarefa", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("TaskId");
@@ -232,7 +232,7 @@ namespace TaskFlow.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Usuario");
+                            b1.ToTable("Usuario", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -254,7 +254,7 @@ namespace TaskFlow.Infrastructure.Persistence.Migrations
                             b1.HasIndex("Address")
                                 .IsUnique();
 
-                            b1.ToTable("Usuario");
+                            b1.ToTable("Usuario", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

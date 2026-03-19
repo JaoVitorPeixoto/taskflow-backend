@@ -39,6 +39,9 @@ public class TaskConfiguration : EntityBaseConfiguration<Domain.Entities.Task>
             .WithMany(t => t.SubTasks)
             .HasForeignKey(t => t.ParentTaskId)
             .OnDelete(DeleteBehavior.SetNull);
+        
+        builder.Navigation(x => x.SubTasks)
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
 
         
         builder.Property(x => x.Title)

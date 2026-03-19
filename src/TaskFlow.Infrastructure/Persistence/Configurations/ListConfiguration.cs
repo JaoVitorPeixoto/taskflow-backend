@@ -38,5 +38,8 @@ public class ListConfiguration : EntityBaseConfiguration<List>
             .WithOne(t => t.List)
             .HasForeignKey(t => t.ListId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Navigation(x => x.Tasks)
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

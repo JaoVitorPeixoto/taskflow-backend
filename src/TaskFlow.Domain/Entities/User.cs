@@ -12,8 +12,11 @@ public class User : EntityBase
     public AvatarUrl AvatarUrl { get; private set; }
 
     // Navegações
-    public IReadOnlyCollection<List> Lists { get; private set; } = [];
-    public IReadOnlyCollection<Task> Tasks { get; private set; } = [];
+    private readonly List<List> _lists = new();
+    private readonly List<Task> _tasks = new();
+
+    public IReadOnlyCollection<List> Lists => _lists;
+    public IReadOnlyCollection<Task> Tasks => _tasks;
 
     // EF Core
     private User() { }

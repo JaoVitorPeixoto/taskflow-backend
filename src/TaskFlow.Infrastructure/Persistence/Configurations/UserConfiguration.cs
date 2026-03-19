@@ -47,10 +47,16 @@ public class UserConfiguration : EntityBaseConfiguration<User>
             .HasForeignKey(l => l.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
+        builder.Navigation(x => x.Lists)
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
+        
 
         builder.HasMany(x => x.Tasks)
             .WithOne(t => t.User)
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Navigation(x => x.Tasks)
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

@@ -19,10 +19,12 @@ public class Task : EntityBase
 
 
     // Navegações
-    public User User { get; }
-    public List? List { get; }
-    public Task? ParentTask { get; }
-    public IReadOnlyCollection<Task> SubTasks { get; private set; } = [];
+    public User User { get; private set; } = null!;
+    public List? List { get; private set; } = null!;
+    public Task? ParentTask { get; private set; } = null!;
+    
+    private readonly List<Task> _subTasks = new();
+    public IReadOnlyCollection<Task> SubTasks => _subTasks;
 
     // Ef Core
     private Task() {}
