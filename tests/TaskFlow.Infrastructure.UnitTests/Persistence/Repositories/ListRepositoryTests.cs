@@ -32,14 +32,16 @@ public class ListRepositoryTests : IAsyncLifetime
             _faker.Name.FullName(),
             new Email(_faker.Internet.Email()),
             _faker.Internet.Password(),
-            new AvatarUrl(_faker.Internet.Avatar())
+            new AvatarUrl(_faker.Internet.Avatar()),
+            new UserTimeZone("UTC")
         );
 
         _user2 = new User(
             _faker.Name.FullName(),
             new Email(_faker.Internet.Email()),
             _faker.Internet.Password(),
-            new AvatarUrl(_faker.Internet.Avatar())
+            new AvatarUrl(_faker.Internet.Avatar()),
+            new UserTimeZone("UTC")
         );
         
         _list1 = new List(

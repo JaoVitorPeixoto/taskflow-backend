@@ -20,15 +20,17 @@ public class UserTests
         var email = new Email(_faker.Internet.Email());
         var password = _faker.Internet.Password();
         var avatarUrl = new AvatarUrl(_faker.Internet.Avatar());
+        var userTimeZone = new UserTimeZone("UTC");
 
         // Act
-        var user = new User(name, email, password, avatarUrl);
+        var user = new User(name, email, password, avatarUrl, userTimeZone);
 
         // Assert
         Assert.Equal(name, user.Name);
         Assert.Equal(email, user.Email);
         Assert.Equal(password, user.Password);
         Assert.Equal(avatarUrl, user.AvatarUrl);
+        Assert.Equal(userTimeZone, user.UserTimeZone);
     }
 
     [Fact]
@@ -40,9 +42,10 @@ public class UserTests
         var email = new Email(_faker.Internet.Email());
         var password = _faker.Internet.Password();
         var avatarUrl = new AvatarUrl(_faker.Internet.Avatar());
+        var userTimeZone = new UserTimeZone("UTC");
 
         // Act & Assert
-        var exception = Assert.Throws<DataIsInvalidException>(() => new User("", email, password, avatarUrl));
+        var exception = Assert.Throws<DataIsInvalidException>(() => new User("", email, password, avatarUrl, userTimeZone));
         Assert.Equal("NAME_IS_EMPTY", exception.Code);
     }
 
@@ -56,9 +59,10 @@ public class UserTests
         var name = _faker.Person.FullName;
         var email = new Email(_faker.Internet.Email());
         var avatarUrl = new AvatarUrl(_faker.Internet.Avatar());
+        var userTimeZone = new UserTimeZone("UTC");
 
         // Act & Assert
-        var exception = Assert.Throws<DataIsInvalidException>(() => new User(name, email, "", avatarUrl));
+        var exception = Assert.Throws<DataIsInvalidException>(() => new User(name, email, "", avatarUrl, userTimeZone));
         Assert.Equal("PASSWORD_IS_EMPTY", exception.Code);
     }
 
@@ -139,6 +143,22 @@ public class UserTests
     [Fact]
     [Trait("Modulo", "Domain")]
     [Trait("Entity", "User")]
+    public void UpdateUserTimeZone_GivenValidUserTimeZone_ShouldUpdateUserTimeZone()
+    {
+        // Arrange
+        var user = CreateValidUser();
+        var newUserTimeZone = new UserTimeZone("UTC");
+
+        // Act
+        user.UpdateUserTimeZone(newUserTimeZone);
+
+        // Assert
+        Assert.Equal(newUserTimeZone, user.UserTimeZone);
+    }
+
+    [Fact]
+    [Trait("Modulo", "Domain")]
+    [Trait("Entity", "User")]
     public void UpdateAvatarUrl_GivenValidAvatarUrl_ShouldUpdateAvatarUrl()
     {
         // Arrange
@@ -172,8 +192,8 @@ public class UserTests
     public void Compare_GivenTwoDiferentUsers_ShouldBeDiferents()
     {
         // Arrange
-        var user1 = new User("João Peixoto", new("joao1@teste.com"), "1234", new AvatarUrl(_faker.Internet.Avatar()));
-        var user2 = new User("João Peixoto 2", new("joao2@teste.com"), "1234", new AvatarUrl(_faker.Internet.Avatar()));
+        var user1 = new User("João Peixoto", new("joao1@teste.com"), "1234", new AvatarUrl(_faker.Internet.Avatar()), new UserTimeZone("UTC"));
+        var user2 = new User("João Peixoto 2", new("joao2@teste.com"), "1234", new AvatarUrl(_faker.Internet.Avatar()), new UserTimeZone("UTC"));
 
         // Act and Assert
         user1.Should().NotBe(user2);
@@ -185,7 +205,8 @@ public class UserTests
             _faker.Person.FullName,
             new Email(_faker.Internet.Email()),
             _faker.Internet.Password(),
-            new AvatarUrl(_faker.Internet.Avatar())
+            new AvatarUrl(_faker.Internet.Avatar()),
+            new UserTimeZone("UTC")
         );
     }
 }

@@ -58,5 +58,13 @@ public class UserConfiguration : EntityBaseConfiguration<User>
 
         builder.Navigation(x => x.Tasks)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.OwnsOne(x => x.UserTimeZone, userTimeZone =>
+        {
+            userTimeZone.Property(tz => tz.ZoneId)
+                .HasColumnName("TimeZone")
+                .HasMaxLength(120)
+                .IsRequired(true);
+        });
     }
 }

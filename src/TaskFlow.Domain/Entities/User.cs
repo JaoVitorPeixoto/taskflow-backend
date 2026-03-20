@@ -10,6 +10,7 @@ public class User : EntityBase
     public Email Email { get; private set; }
     public string Password { get; private set; }
     public AvatarUrl AvatarUrl { get; private set; }
+    public UserTimeZone UserTimeZone { get; private set; }
 
     // Navegações
     private readonly List<List> _lists = new();
@@ -25,7 +26,8 @@ public class User : EntityBase
         string name,
         Email email,
         string password,
-        AvatarUrl avartarUrl
+        AvatarUrl avartarUrl,
+        UserTimeZone userTimeZone
     ) : base()
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -37,6 +39,7 @@ public class User : EntityBase
         this.Password = password;
         this.Email = email;
         this.AvatarUrl = avartarUrl;
+        this.UserTimeZone = userTimeZone;
     }
 
     public void UpdateName(string name)
@@ -45,6 +48,13 @@ public class User : EntityBase
             throw new DataIsInvalidException("NAME_IS_EMPTY", "Name cannot be empty.");
 
         this.Name = name;
+
+        this.UpdateAudit();
+    }
+
+    public void UpdateUserTimeZone(UserTimeZone userTimeZone)
+    {
+        this.UserTimeZone = userTimeZone;
 
         this.UpdateAudit();
     }
