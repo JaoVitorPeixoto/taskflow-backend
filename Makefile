@@ -66,12 +66,20 @@ ef-migrations: ## Criar nova migração. (Exemplo: make ef-migrations name=Migra
 		--context AppDbContext
 
 
-ef-update-database: ## Atualizar banco de dados com a última migração
-	@echo "Atualizando banco de dados com a última migração..."
-	@dotnet ef database update \
-		--project $(MIGRATIONS_PROJECT) \
-		--startup-project $(STARTUP_PROJECT) \
-		--context AppDbContext
+ef-update-database: ## Atualizar banco com migrationName específica (se informada) ou com a última migration pendente
+	@if [ -n "$(migrationName)" ]; then \
+		echo "Atualizando banco de dados com a migração: $(migrationName)..."; \
+		dotnet ef database update $(migrationName) \
+			--project $(MIGRATIONS_PROJECT) \
+			--startup-project $(STARTUP_PROJECT) \
+			--context AppDbContext; \
+	else \
+		echo "Atualizando banco de dados para a última migration..."; \
+		dotnet ef database update \
+			--project $(MIGRATIONS_PROJECT) \
+			--startup-project $(STARTUP_PROJECT) \
+			--context AppDbContext; \
+	fi
 
 
 ef-remove-migrations: ## Remover a última migração
