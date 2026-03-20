@@ -62,7 +62,7 @@ public class UserConfiguration : EntityBaseConfiguration<User>
         builder.OwnsOne(x => x.UserTimeZone, userTimeZone =>
         {
             userTimeZone.Property(tz => tz.ZoneId)
-                .HasColumnName("TimeZone")
+                .HasColumnName("FusoHorario")
                 .HasMaxLength(120)
                 .IsRequired(true);
         });
